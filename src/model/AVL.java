@@ -87,7 +87,7 @@ public class AVL <K extends Comparable,V> {
             toDelete.setKey(temporalToDelete.getKey());
             toDelete.setValue(temporalToDelete.getValue());
         }
-        //AVLRebalance();
+        AVLRebalance(toDelete);
     }
 
     public Node<K,V> search(K key){
@@ -144,7 +144,7 @@ public class AVL <K extends Comparable,V> {
 
                 } else { //rightRotation
                     if (balanceFactor(current.getLeft()) == 1){
-                        leftRotation(current);
+                        leftRotation(current.getLeft());
                         rightRotation(current);
                     } else if (balanceFactor(current.getLeft()) == -1) {
                         rightRotation(current);
@@ -173,7 +173,7 @@ public class AVL <K extends Comparable,V> {
         queue.add(root);
         while (!queue.isEmpty()) {
             Node node = queue.poll();
-            txt += node.getValue() + " ";
+            txt += node.getKey() + " ";
 
             if (node.getLeft() != null) {
                 queue.add(node.getLeft());
@@ -198,12 +198,12 @@ public class AVL <K extends Comparable,V> {
 
     public void leftRotation (Node current){
         Node tem = null;
-        if (current.getRight().getRight() != null ) tem = current.getRight().getRight();
-
+        if (current.getRight().getLeft() != null ) tem = current.getRight().getRight();
+        // Asignar padre
         if (current.getParent() == null) root = current.getRight();
         else {
             if (current.getParent(). getRight() == current) current.getParent().setRight(current.getRight());
-            else current.getParent().setLeft(current.getLeft());
+            else current.getParent().setLeft(current.getRight());
         }
 
         current.getRight().setParent(current.getParent());
