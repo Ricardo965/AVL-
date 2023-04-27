@@ -122,6 +122,37 @@ public class AVL <K extends Comparable,V> {
 
     }
 
+    private void AVLRebalance(Node<K,V> x){
+        Node<K,V> current = x;
+        while (current != null){
+            if(Math.abs(balanceFactor(current)) > 1){
+                if (balanceFactor(current) > 0){ //leftRotation hijo derecho mas gordo
+
+                    if (balanceFactor(current.getRight()) == 1){
+                        //leftRotation(current);
+                    } else if (balanceFactor(current.getRight()) == -1) {
+                        //rightRotation(current);
+                        //leftRotation(current);
+                    } else {
+                        //leftRotation(current);
+                    }
+
+                } else { //rightRotation
+                    if (balanceFactor(current.getLeft()) == 1){
+                        //leftRotation(current);
+                        //rightRotation(current);
+                    } else if (balanceFactor(current.getLeft()) == -1) {
+                        //rightRotation(current);
+                    } else {
+                        //rightRotation(current);
+                    }
+                }
+            }
+
+            current = current.getParent();
+        }
+    }
+
 
     
 
