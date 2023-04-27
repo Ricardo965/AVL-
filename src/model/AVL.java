@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class AVL <K extends Comparable,V> {
     private  Node<K,V> root;
 
@@ -28,6 +31,7 @@ public class AVL <K extends Comparable,V> {
         if (nodeToInsert.getKey().compareTo(father.getKey()) < 0 ) father.setLeft(nodeToInsert);
         else father.setRight(nodeToInsert);
         nodeToInsert.setParent(father);
+        AVLRebalance(nodeToInsert);
     }
 
     public Node<K,V> successor(Node<K,V> node){
@@ -83,6 +87,7 @@ public class AVL <K extends Comparable,V> {
             toDelete.setKey(temporalToDelete.getKey());
             toDelete.setValue(temporalToDelete.getValue());
         }
+        //AVLRebalance();
     }
 
     public Node<K,V> search(K key){
@@ -105,9 +110,79 @@ public class AVL <K extends Comparable,V> {
         if (current.getLeft() == null) return current;
         return minimum(current.getLeft());
     }
+
+    private int balanceFactor(Node<K,V> current){
+        return depth(current.getRight(), 0) - depth(current.getLeft(), 0);
+    }
+
+    private int depth(Node<K,V> current, int n) {
+        if (current == null) {
+            return n-1;
+        }
+        if (depth(current.getRight(), n+1) >= depth(current.getLeft(), n+1)) {
+            return depth(current.getRight(), n+1);
+        } else {
+            return depth(current.getLeft(), n+1);
+        }
+
+    }
+
+    private void AVLRebalance(Node<K,V> x){
+        Node<K,V> current = x;
+        while (current != null){
+            if(Math.abs(balanceFactor(current)) > 1){
+                if (balanceFactor(current) > 0){ //leftRotation hijo derecho mas gordo
+
+                    if (balanceFactor(current.getRight()) == 1){
+                        leftRotation(current);
+                    } else if (balanceFactor(current.getRight()) == -1) {
+                        rightRotation(current.getRight());
+                        leftRotation(current);
+                    } else {
+                        leftRotation(current);
+                    }
+
+                } else { //rightRotation
+                    if (balanceFactor(current.getLeft()) == 1){
+                        leftRotation(current);
+                        rightRotation(current);
+                    } else if (balanceFactor(current.getLeft()) == -1) {
+                        rightRotation(current);
+                    } else {
+                        rightRotation(current);
+                    }
+                }
+            }
+
+            current = current.getParent();
+        }
+    }
+
+
+    
+
     public String printTree(){
         if (root == null) return "Raiz vacia";
         else return printTreeInternal(root);
+    }
+
+    public  String printTreeByLevel(){
+        if(root == null) return "Arbol vacio";
+        String txt = "";
+        Queue<Node<K,V>> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            Node node = queue.poll();
+            txt += node.getValue() + " ";
+
+            if (node.getLeft() != null) {
+                queue.add(node.getLeft());
+            }
+            if (node.getRight() != null) {
+                queue.add(node.getRight());
+            }
+        }
+        return txt;
     }
 
 
