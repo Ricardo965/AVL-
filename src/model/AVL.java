@@ -161,6 +161,78 @@ public class AVL <K extends Comparable,V> {
         else return printTreeInternal(root);
     }
 
+
+    public int balancedFactor(Node current){
+        int left =0, right = 0;
+
+        if (current.getLeft() != null) left = longestPath(current.getLeft(), 0);
+        if (current.getRight() != null) right = longestPath(current.getRight(), 0);
+
+        return  right - left ;
+
+    }
+
+    public void leftRotation (Node current){
+        Node tem = null;
+        if (current.getRight().getRight() != null ) tem = current.getRight().getRight();
+
+        if (current.getParent() == null) root = current.getRight();
+        else {
+            if (current.getParent(). getRight() == current) current.getParent().setRight(current.getRight());
+            else current.getParent().setLeft(current.getLeft());
+        }
+
+        current.getRight().setParent(current.getParent());
+        current.setParent(current.getRight());
+        current.getParent().setLeft(current);
+
+        current.setRight(tem);
+    }
+
+    public void rightRotation (Node current){
+        Node tem = null;
+
+        if (current.getLeft().getRight() != null ) tem = current.getLeft().getRight();
+
+        if (current.getParent() == null) root = current.getLeft();
+        else {
+            if (current.getParent(). getRight() == current) current.getParent().setRight(current.getLeft());
+            else current.getParent().setLeft(current.getLeft());
+        }
+
+        current.getLeft().setParent(current.getParent());
+        current.setParent(current.getLeft());
+        current.getParent().setRight(current);
+
+        current.setLeft(tem);
+    }
+
+    public int longestPath(){
+        if (root==null)return 0;
+        else return (longestPath(root,0) +1);
+    }
+
+    private int longestPath (Node current, int counter){
+
+        if (current.getLeft() == null && current.getRight() == null){
+            return counter;
+        }
+        if (current.getRight() != null && current.getLeft()==null) { //Unico camino por la derecha
+            return longestPath(current.getRight(),counter+1);
+        }
+
+        if (current.getRight() == null && current.getLeft() != null){
+            return longestPath(current.getLeft(),counter+1);
+        }
+
+        if (current.getLeft() != null && current.getRight() != null){
+            if (longestPath(current.getRight(),counter+1) > longestPath(current.getLeft(),counter+1)){
+                return longestPath(current.getRight(),counter+1);
+            }else return longestPath(current.getLeft(),counter+1);
+
+        }else return 0;// unreacheble
+    }
+
     private String printTreeInternal(Node current){
         if (current == null)return "";
         return printTreeInternal(current.getLeft()) + current.getKey() + ", " + printTreeInternal(current.getRight());
