@@ -198,12 +198,12 @@ public class AVL <K extends Comparable,V> {
 
     public void leftRotation (Node current){
         Node tem = null;
-        if (current.getRight().getRight() != null ) tem = current.getRight().getRight();
-
+        if (current.getRight().getLeft() != null ) tem = current.getRight().getRight();
+        // Asignar padre
         if (current.getParent() == null) root = current.getRight();
         else {
             if (current.getParent(). getRight() == current) current.getParent().setRight(current.getRight());
-            else current.getParent().setLeft(current.getLeft());
+            else current.getParent().setLeft(current.getRight());
         }
 
         current.getRight().setParent(current.getParent());
@@ -212,7 +212,6 @@ public class AVL <K extends Comparable,V> {
 
         current.setRight(tem);
     }
-
     public void rightRotation (Node current){
         Node tem = null;
 
@@ -221,7 +220,7 @@ public class AVL <K extends Comparable,V> {
         if (current.getParent() == null) root = current.getLeft();
         else {
             if (current.getParent(). getRight() == current) current.getParent().setRight(current.getLeft());
-            else current.getParent().setLeft(current.getRight());
+            else current.getParent().setLeft(current.getLeft());
         }
 
         current.getLeft().setParent(current.getParent());
