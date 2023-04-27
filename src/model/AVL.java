@@ -31,6 +31,7 @@ public class AVL <K extends Comparable,V> {
         if (nodeToInsert.getKey().compareTo(father.getKey()) < 0 ) father.setLeft(nodeToInsert);
         else father.setRight(nodeToInsert);
         nodeToInsert.setParent(father);
+        AVLRebalance(nodeToInsert);
     }
 
     public Node<K,V> successor(Node<K,V> node){
@@ -86,6 +87,7 @@ public class AVL <K extends Comparable,V> {
             toDelete.setKey(temporalToDelete.getKey());
             toDelete.setValue(temporalToDelete.getValue());
         }
+        //AVLRebalance();
     }
 
     public Node<K,V> search(K key){
@@ -134,7 +136,7 @@ public class AVL <K extends Comparable,V> {
                     if (balanceFactor(current.getRight()) == 1){
                         leftRotation(current);
                     } else if (balanceFactor(current.getRight()) == -1) {
-                        rightRotation(current);
+                        rightRotation(current.getRight());
                         leftRotation(current);
                     } else {
                         leftRotation(current);
