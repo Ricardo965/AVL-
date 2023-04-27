@@ -112,7 +112,10 @@ public class AVL <K extends Comparable,V> {
     }
 
     private int balanceFactor(Node<K,V> current){
-        return depth(current.getRight(), 0) - depth(current.getLeft(), 0);
+
+        int d = depth(current.getRight(), 0);
+        int l = depth(current.getLeft(), 0);
+        return  d - l ;
     }
 
     private int depth(Node<K,V> current, int n) {
@@ -124,7 +127,6 @@ public class AVL <K extends Comparable,V> {
         } else {
             return depth(current.getLeft(), n+1);
         }
-
     }
 
     private void AVLRebalance(Node<K,V> x){
@@ -196,10 +198,27 @@ public class AVL <K extends Comparable,V> {
 
     }
 
+    public void rightRotation (Node current){
+        Node tem = null;
+        if (current.getLeft().getRight() != null ) tem = current.getLeft().getRight();
+        // Asignar padre
+        if (current.getParent() == null) root = current.getLeft();
+        else {
+            if (current.getParent(). getRight() == current) current.getParent().setRight(current.getLeft());
+            else current.getParent().setLeft(current.getLeft());
+        }
+
+        current.getLeft().setParent(current.getParent());
+        current.setParent(current.getLeft());
+        current.getParent().setRight(current);
+
+        current.setRight(tem);
+    }
     public void leftRotation (Node current){
         Node tem = null;
-        if (current.getRight().getLeft() != null ) tem = current.getRight().getRight();
-        // Asignar padre
+
+        if (current.getRight().getLeft() != null ) tem = current.getRight().getLeft();
+
         if (current.getParent() == null) root = current.getRight();
         else {
             if (current.getParent(). getRight() == current) current.getParent().setRight(current.getRight());
@@ -212,28 +231,12 @@ public class AVL <K extends Comparable,V> {
 
         current.setRight(tem);
     }
-    public void rightRotation (Node current){
-        Node tem = null;
-
-        if (current.getLeft().getRight() != null ) tem = current.getLeft().getRight();
-
-        if (current.getParent() == null) root = current.getLeft();
-        else {
-            if (current.getParent(). getRight() == current) current.getParent().setRight(current.getLeft());
-            else current.getParent().setLeft(current.getLeft());
-        }
-
-        current.getLeft().setParent(current.getParent());
-        current.setParent(current.getLeft());
-        current.getParent().setRight(current);
-
-        current.setLeft(tem);
-    }
 
     public int longestPath(){
         if (root==null)return 0;
         else return (longestPath(root,0) +1);
     }
+
 
     private int longestPath (Node current, int counter){
 

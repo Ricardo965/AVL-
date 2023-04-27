@@ -10,13 +10,17 @@ public class Main {
         System.out.println(tree.printTreeByLevel());
         tree.insertNode(-3,5);
         System.out.println(tree.printTreeByLevel());
+        // error
         tree.insertNode(-2,5);
+
         System.out.println(tree.printTreeByLevel());
+
         tree.delete(18);
         System.out.println(tree.printTreeByLevel());
         
         tree.insertNode(5,5); // Problema de insertion
         System.out.println(tree.printTreeByLevel());
+        /*
         System.out.println("Hola");
         tree.delete(1); // Problema
         System.out.println("Hola");
@@ -29,6 +33,8 @@ public class Main {
 
         tree.delete(2);
         System.out.println(tree.printTreeByLevel());
+
+         */
         System.out.println("Arbol - Print ascendente");
         System.out.println(tree.printTree());
     }
