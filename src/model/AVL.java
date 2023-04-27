@@ -105,6 +105,26 @@ public class AVL <K extends Comparable,V> {
         if (current.getLeft() == null) return current;
         return minimum(current.getLeft());
     }
+
+    private int balanceFactor(Node<K,V> current){
+        return depth(current.getRight(), 0) - depth(current.getLeft(), 0);
+    }
+
+    private int depth(Node<K,V> current, int n) {
+        if (current == null) {
+            return n-1;
+        }
+        if (depth(current.getRight(), n+1) >= depth(current.getLeft(), n+1)) {
+            return depth(current.getRight(), n+1);
+        } else {
+            return depth(current.getLeft(), n+1);
+        }
+
+    }
+
+
+    
+
     public String printTree(){
         if (root == null) return "Raiz vacia";
         else return printTreeInternal(root);
