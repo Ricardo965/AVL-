@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class AVL <K extends Comparable,V> {
     private  Node<K,V> root;
 
@@ -129,22 +132,22 @@ public class AVL <K extends Comparable,V> {
                 if (balanceFactor(current) > 0){ //leftRotation hijo derecho mas gordo
 
                     if (balanceFactor(current.getRight()) == 1){
-                        //leftRotation(current);
+                        leftRotation(current);
                     } else if (balanceFactor(current.getRight()) == -1) {
-                        //rightRotation(current);
-                        //leftRotation(current);
+                        rightRotation(current);
+                        leftRotation(current);
                     } else {
-                        //leftRotation(current);
+                        leftRotation(current);
                     }
 
                 } else { //rightRotation
                     if (balanceFactor(current.getLeft()) == 1){
-                        //leftRotation(current);
-                        //rightRotation(current);
+                        leftRotation(current);
+                        rightRotation(current);
                     } else if (balanceFactor(current.getLeft()) == -1) {
-                        //rightRotation(current);
+                        rightRotation(current);
                     } else {
-                        //rightRotation(current);
+                        rightRotation(current);
                     }
                 }
             }
@@ -159,6 +162,25 @@ public class AVL <K extends Comparable,V> {
     public String printTree(){
         if (root == null) return "Raiz vacia";
         else return printTreeInternal(root);
+    }
+
+    public  String printTreeByLevel(){
+        if(root == null) return "Arbol vacio";
+        String txt = "";
+        Queue<Node<K,V>> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            Node node = queue.poll();
+            txt += node.getValue() + " ";
+
+            if (node.getLeft() != null) {
+                queue.add(node.getLeft());
+            }
+            if (node.getRight() != null) {
+                queue.add(node.getRight());
+            }
+        }
+        return txt;
     }
 
 
