@@ -6,7 +6,7 @@ public class Main {
         System.out.println(tree.printTreeByLevel());
         tree.insertNode(9,9);
         System.out.println(tree.printTreeByLevel());
-        tree.insertNode(7, 7);
+        tree.insertNode(7,7);
         System.out.println(tree.printTreeByLevel());
         tree.insertNode(5,5);
         System.out.println(tree.printTreeByLevel());
