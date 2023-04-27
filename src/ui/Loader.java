@@ -17,7 +17,7 @@ public class Loader {
             try {
                 operations = load(j);
                 int op = operations.get(0);
-                System.out.println("TestCase #" + j + " outputs \n");
+                System.out.println("TestCase #" + j+1 + " outputs \n");
                 for(int i = 1; i < op*2; i = i+2){
                     int option = operations.get(i);
                     Integer key = operations.get(i+1);
