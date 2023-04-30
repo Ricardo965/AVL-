@@ -1,9 +1,10 @@
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class AVL <K extends Comparable,V> {
+public class AVL <K extends Comparable<K>,V> implements IAVL<K,V> {
     private  Node<K,V> root;
 
+    @Override
     public void insertNode(K key,  V value){
 
         Node nodeToInsert = new Node<>(key,value);
@@ -47,6 +48,7 @@ public class AVL <K extends Comparable,V> {
         return father;
     }
 
+    @Override
     public void delete(K key){
         if (root == null) {
             System.out.println("Arbol vacio");
@@ -123,8 +125,8 @@ public class AVL <K extends Comparable,V> {
             return depth(current.getLeft(), n+1);
         }
     }
-
-    private void AVLRebalance(Node<K,V> x){
+    @Override
+    public void AVLRebalance(Node<K,V> x){
         Node<K,V> current = x;
         while (current != null){
             if(Math.abs(balanceFactor(current)) > 1){
@@ -173,9 +175,9 @@ public class AVL <K extends Comparable,V> {
         }
         return txt;
     }
-
-    public void rightRotation (Node current){
-        Node tem = null;
+    @Override
+    public void rightRotation (Node<K,V> current){
+        Node<K,V> tem = null;
         if (current.getLeft().getRight() != null ) tem = current.getLeft().getRight();
         // Asignar padre
         if (current.getParent() == null) root = current.getLeft();
@@ -191,8 +193,9 @@ public class AVL <K extends Comparable,V> {
         current.setLeft(tem);
         if(tem != null) tem.setParent(current);
     }
-    public void leftRotation (Node current){
-        Node tem = null;
+    @Override
+    public void leftRotation (Node<K,V> current){
+        Node<K,V> tem = null;
 
         if (current.getRight().getLeft() != null ) tem = current.getRight().getLeft();
 
@@ -217,5 +220,6 @@ public class AVL <K extends Comparable,V> {
     public void setRoot(Node<K, V> root) {
         this.root = root;
     }
+
 }
 

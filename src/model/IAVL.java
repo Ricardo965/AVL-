@@ -1,9 +1,9 @@
-public interface IAVL < K extends Comparable<K>,T> {
+public interface IAVL < K extends Comparable<K>,V> {
 
-    void insert(Node<K,T> nodeToAdd);
+    void insertNode(K key,  V value);
     void delete(K key);
-    void AVLRebalance(Node<K,T> current);
-    void rightRotate();
-    void leftRotate();
+    void AVLRebalance(Node<K,V> current);
+    void rightRotation(Node<K,V> current);
+    void leftRotation(Node<K,V> current);
 
 }
